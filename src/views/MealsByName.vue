@@ -11,7 +11,14 @@
 </template>
 
 <script setup>
+import { computed } from "vue";
+import store from "../store";
+
 const keyword = ref("");
 
-function searchMeals() {}
+const meals = computed(() => store.state.searchedMeals);
+
+function searchMeals() {
+  store.dispatch("searchMeals", keyword.value);
+}
 </script>
