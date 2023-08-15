@@ -38,9 +38,11 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
 import store from "../store";
+import { useRoute } from "vue-router";
+import { ref, computed, onMounted } from "vue";
 
+const route = useRoute()
 const keyword = ref("");
 
 const meals = computed(() => store.state.searchedMeals);
@@ -48,4 +50,10 @@ const meals = computed(() => store.state.searchedMeals);
 function searchMeals() {
   store.dispatch("searchMeals", keyword.value);
 }
+onMounted(() => {
+  keyword.value = route.params.name
+  if(keyword.value){
+    searchMeals()
+  }
+}),
 </script>
