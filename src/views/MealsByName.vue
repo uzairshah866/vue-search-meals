@@ -1,5 +1,5 @@
 <template>
-  <div class="p-8">
+  <div class="p-8 pb-0">
     <input
       type="text"
       v-model="keyword"
@@ -42,7 +42,7 @@ import store from "../store";
 import { useRoute } from "vue-router";
 import { ref, computed, onMounted } from "vue";
 
-const route = useRoute()
+const route = useRoute();
 const keyword = ref("");
 
 const meals = computed(() => store.state.searchedMeals);
@@ -50,10 +50,11 @@ const meals = computed(() => store.state.searchedMeals);
 function searchMeals() {
   store.dispatch("searchMeals", keyword.value);
 }
-onMounted(() => {
-  keyword.value = route.params.name
-  if(keyword.value){
-    searchMeals()
-  }
-}),
+
+// onMounted(() => {
+//   keyword.value = route.params.name
+//   if(keyword.value){
+//     searchMeals()
+//   }
+// }),
 </script>
