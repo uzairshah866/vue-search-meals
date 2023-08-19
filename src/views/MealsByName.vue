@@ -14,7 +14,7 @@
       :key="meal.idMeal"
       class="bg-white shadow rounded-xl"
     >
-      <router-link to="/">
+      <router-link :to="{ name: 'mealDetails', params: { id: meal.idMeal } }">
         <img
           :src="meal.strMealThumb"
           :alt="meal.strMeal"
@@ -25,12 +25,7 @@
         <h3 class="font-bold">{{ meal.strMeal }}</h3>
         <p class="mb-4">{{ meal.strInstructions }}</p>
         <div class="flex items-center justify-between">
-          <a
-            :href="meal.strYoutube"
-            target="_blank"
-            class="px-3 py-2 rounded border-2 border-red-600 bg-red-500 hover:bg-red-600 text-white transition-colors"
-            >YouTube</a
-          >
+          <YoutubeButton :href="meal.strYoutube">YouTube</YoutubeButton>
         </div>
       </div>
     </div>
@@ -41,6 +36,7 @@
 import store from "../store";
 import { useRoute } from "vue-router";
 import { ref, computed, onMounted } from "vue";
+import YoutubeButton from "../components/YoutubeButton.vue";
 
 const route = useRoute();
 const keyword = ref("");
@@ -51,10 +47,10 @@ function searchMeals() {
   store.dispatch("searchMeals", keyword.value);
 }
 
-// onMounted(() => {
-//   keyword.value = route.params.name
-//   if(keyword.value){
-//     searchMeals()
-//   }
-// }),
+onMounted(() => {
+  keyword.value = route.params.name;
+  if (keyword.value) {
+    searchMeals();
+  }
+});
 </script>
